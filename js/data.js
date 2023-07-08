@@ -58,4 +58,8 @@ function CreateId() {
   };
 }
 
-export { COMMENTS, DESCRIPTION, NAMES, GetRandomNum, CreateId };
+let randomId = CreateId();
+let urlId = CreateId();
+let commentId = CreateId();
+
+export { COMMENTS, DESCRIPTION, NAMES, GetRandomNum, randomId , urlId ,commentId };

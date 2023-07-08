@@ -1,8 +1,6 @@
-import {COMMENTS,DESCRIPTION,NAMES,GetRandomNum,CreateId} from "./data.js";
+import {COMMENTS,DESCRIPTION,NAMES,GetRandomNum,randomId,urlId,commentId} from "./data.js";
 
-let randomId = CreateId();
-let urlId = CreateId();
-let commentId = CreateId();
+let generatedData = []
 
 function GenerateComments() {
   return Array.from({ length: GetRandomNum(5, 25) }, () => ({
@@ -23,4 +21,7 @@ function GenerateData() {
   }));
 }
 
-export { GenerateComments, GenerateData };
+generatedData = GenerateData()
+console.log(generatedData)
+
+export { GenerateComments, GenerateData , generatedData};
