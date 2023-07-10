@@ -47,19 +47,5 @@ const NAMES = [
   "Борислав",
 ];
 
-function GetRandomNum(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
 
-function CreateId() {
-  let x = 0;
-  return function () {
-    return (x += 1);
-  };
-}
-
-let randomId = CreateId();
-let urlId = CreateId();
-let commentId = CreateId();
-
-export { COMMENTS, DESCRIPTION, NAMES, GetRandomNum, randomId , urlId ,commentId };
+export { COMMENTS, DESCRIPTION, NAMES};

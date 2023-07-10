@@ -1,27 +1,12 @@
-import {COMMENTS,DESCRIPTION,NAMES,GetRandomNum,randomId,urlId,commentId} from "./data.js";
-
-let generatedData = []
-
-function GenerateComments() {
-  return Array.from({ length: GetRandomNum(5, 25) }, () => ({
-    id: commentId(),
-    avatar: `img/avatar-${GetRandomNum(1, 6)}.svg`,
-    message: COMMENTS[GetRandomNum(0, COMMENTS.length - 1)],
-    name: NAMES[GetRandomNum(0, NAMES.length - 1)],
-  }));
+const GetRandomNum = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function GenerateData() {
-  return Array.from({ length: 25 }, () => ({
-    id: randomId(),
-    url: `photos/${urlId()}.jpg`,
-    description: DESCRIPTION[GetRandomNum(0, DESCRIPTION.length - 1)],
-    likes: GetRandomNum(15, 200),
-    comments: GenerateComments(),
-  }));
+const CreateId = () => {
+  let x = 0;
+  return function () {
+    return (x += 1);
+  };
 }
 
-generatedData = GenerateData()
-console.log(generatedData)
-
-export { GenerateComments, GenerateData , generatedData};
+export { GetRandomNum , CreateId };

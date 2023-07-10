@@ -1,4 +1,5 @@
-import { generatedData } from "./util.js";
+import { generatedData } from "./mock-data.js";
+
 
 const popup = document.querySelector(".big-picture");
 const popup_close_btn = popup.querySelector(".big-picture__cancel");
@@ -11,7 +12,7 @@ const popup_comments = popup.querySelector(".comments-count");
 const popup_comments_list = popup.querySelector(".social__comments");
 const thumbnails = document.querySelector(".pictures");
 
-function renderComments(avatar, name, message) {
+const createComments = (avatar, name, message) => {
   const li = document.createElement("li");
   const img = document.createElement("img");
   const p = document.createElement("p");
@@ -27,27 +28,31 @@ function renderComments(avatar, name, message) {
   return li;
 }
 
-function renderPopup(evt) {
-  likes_counter.classList.add("hidden");
-  comments_loader.classList.add("hidden");
-  document.querySelector("body").classList.add("modal-open");
-  generatedData.forEach(({ id, url, likes, comments, description }) => {
-    if (evt.target.dataset.id == id) {
-      popup_img.src = url;
-      popup_img.alt = description;
-      popup_description.textContent = description;
-      popup_likes.textContent = likes;
-      popup_comments.textContent = comments.length;
+const createCommentsList = (id) => {
+  generatedData[id].comments.map((data) => {
+    popup_comments_list.append(createComments(data.avatar, data.name, data.message));
+  });
+}
+
+const renderPopup = (evt) => {
+
+  generatedData.forEach((data) => {
+    if (evt.target.dataset.id == data.id) {
+      let commentID = data.id - 1
+      popup_img.src = data.url;
+      popup_img.alt = data.description;
+      popup_description.textContent = data.description;
+      popup_likes.textContent = data.likes;
+      popup_comments.textContent = data.comments.length;
       popup_comments_list.innerHTML = "";
-      generatedData[id - 1].comments.map(({ avatar, name, message }) => {
-        popup_comments_list.append(renderComments(avatar, name, message));
-      });
+     createCommentsList(commentID)
     }
   });
 }
 
-function ShowPopup(evt) {
+const ShowPopup = (evt) => {
   if (evt.target.tagName == "IMG") {
+    document.querySelector("body").classList.add("modal-open");
     popup.classList.remove("hidden");
     renderPopup(evt);
   }
@@ -55,8 +60,9 @@ function ShowPopup(evt) {
   popup_close_btn.addEventListener("click", HidePopup);
 }
 
-function HidePopup(evt) {
+const HidePopup = (evt) => {
   if (evt.key == "Escape" || evt.target.id == "picture-cancel") {
+    document.querySelector("body").classList.remove("modal-open");
     popup.classList.add("hidden");
     popup_close_btn.removeEventListener("click", HidePopup);
     document.removeEventListener("keydown", HidePopup);

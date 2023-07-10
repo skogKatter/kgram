@@ -1,23 +1,22 @@
-import {generatedData } from './util.js'
+import { generatedData } from "./mock-data.js";
 import { ShowPopup } from "./popup.js";
 
-
-const mockData = generatedData; 
+const mockData = generatedData;
 const imgTemplate = document.querySelector("#picture").content.querySelector(".picture");
 const imgContainer = document.querySelector(".pictures");
 
-function createThumbs() {
-  mockData.map(({id, url, likes, comments , description }) => {
+const createThumbs = () =>  {
+  mockData.map((data) => {
     const usrImg = imgTemplate.cloneNode(true);
-    usrImg.querySelector(".picture__img").src = url;
-    usrImg.querySelector(".picture__img").alt = description
-      usrImg.querySelector(".picture__img").dataset.id = id;
-    usrImg.querySelector(".picture__likes").textContent = likes;
-    usrImg.querySelector(".picture__comments").textContent = comments.length;
+    usrImg.querySelector(".picture__img").src = data.url;
+    usrImg.querySelector(".picture__img").alt = data.description;
+    usrImg.querySelector(".picture__img").dataset.id = data.id;
+    usrImg.querySelector(".picture__likes").textContent = data.likes;
+    usrImg.querySelector(".picture__comments").textContent = data.comments.length;
     imgContainer.appendChild(usrImg);
   });
 }
 
 createThumbs();
 
-export {createThumbs}
+export { createThumbs };
